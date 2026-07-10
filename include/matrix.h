@@ -21,13 +21,20 @@ public:
     // Destructor: Frees the dynamically allocated memory to avoid leaks
     ~Matrix(); 
 
+    // Copy constructor: Used when creating a new matrix from an existing one (e.g., Matrix B = A;)
+    Matrix(const Matrix& other);
+    // Copy Assignment Operator: Used when assigning to an already existing matrix (e.g., B = A;)
+    Matrix& operator=(const Matrix& other);
+
     // Getter methods for dimensions
     size_t getRows() const;
     size_t getCols() const;
 
     float& operator()(size_t row, size_t col);
-
     float operator()(size_t row, size_t col) const;
+
+    // Operator Overloading the '+' symbol for Matrix addition
+    Matrix operator+(const Matrix& other) const;
 
     void print() const;
 };
