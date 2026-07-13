@@ -21,3 +21,31 @@ TEST(MatrixTest, Initialization) {
         }
     }
 }
+
+TEST(MatrixTest, Addition) {
+    // Declare 2 x 2 matrices A & B
+    Matrix A(2, 2);
+    Matrix B(2, 2);
+
+    // Initialize Matrix A
+    A(0, 0) = 1.0f;
+    A(0, 1) = 2.0f;
+    A(1, 0) = 3.0f;
+    A(1, 1) = 4.0f;
+
+    // Inititalize Matrix B
+    B(0, 0) = 1.0f;
+    B(0, 1) = 2.0f;
+    B(1, 0) = 3.0f;
+    B(1, 1) = 4.0f;
+
+    // Perform addition C = A + B
+    Matrix C = A + B;
+
+    // Validate results of C
+    EXPECT_FLOAT_EQ(C(0, 0), 2.0f);
+    EXPECT_FLOAT_EQ(C(0, 1), 4.0f);
+    EXPECT_FLOAT_EQ(C(1, 0), 6.0f);
+    EXPECT_FLOAT_EQ(C(1, 1), 8.0f);
+
+}
