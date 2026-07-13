@@ -15,26 +15,22 @@ private:
     */
 
 public:
-    // Constructor: Allocates memory for a rows x cols matrix initialized to 0.0f
-    Matrix(size_t rows, size_t cols);       
+    
+    Matrix(size_t rows, size_t cols); // Constructor: Allocates memory for a rows x cols matrix initialized to 0.0f
+    ~Matrix(); // Destructor: Frees the dynamically allocated memory to avoid leaks
 
-    // Destructor: Frees the dynamically allocated memory to avoid leaks
-    ~Matrix(); 
-
-    // Copy constructor: Used when creating a new matrix from an existing one (e.g., Matrix B = A;)
-    Matrix(const Matrix& other);
-    // Copy Assignment Operator: Used when assigning to an already existing matrix (e.g., B = A;)
-    Matrix& operator=(const Matrix& other);
+    Matrix(const Matrix& other); // Copy constructor: Used when creating a new matrix from an existing one (e.g., Matrix B = A;)
+    Matrix& operator=(const Matrix& other); // Copy Assignment Operator: Used when assigning to an already existing matrix (e.g., B = A;)
 
     // Getter methods for dimensions
     size_t getRows() const;
     size_t getCols() const;
 
-    float& operator()(size_t row, size_t col);
-    float operator()(size_t row, size_t col) const;
-
-    // Operator Overloading the '+' symbol for Matrix addition
-    Matrix operator+(const Matrix& other) const;
+    // Operator Overload
+    float& operator()(size_t row, size_t col); // Set () operator: mat(0, 0) = 1.0f;
+    float operator()(size_t row, size_t col) const; // Get () operator: float weight = math(1, 0);
+    Matrix operator+(const Matrix& other) const; // Operator Overloading the '+' symbol for Matrix addition
+    Matrix operator-(const Matrix& other) const; // Opeartor overloading the '-' symbol for Matrix substraction
 
     void print() const;
 };

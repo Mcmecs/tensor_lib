@@ -67,7 +67,6 @@ float Matrix::operator()(size_t row, size_t col) const {
 
 // Operator Overloading operator+
 Matrix Matrix::operator+(const Matrix& other) const {
-    // I think there should be some exception if the dimension doesn't match
     if (rows_ != other.rows_ || cols_ != other.cols_) {
         throw std::invalid_argument("Matrix dimensions must match for matrix addition.");
     }
@@ -79,6 +78,22 @@ Matrix Matrix::operator+(const Matrix& other) const {
     for (size_t i = 0; i < rows_; ++i) {
         for (size_t j = 0; j < cols_; ++j) {
             result(i, j) = (*this)(i, j) + other(i, j);
+        }
+    }
+
+    return result;
+}
+
+Matrix Matrix::operator-(const Matrix& other) const {
+    if (cols_ != other.cols_ || rows_ != other.rows_) {
+        throw std::invalid_argument("Matrix dimensions much match for matrix substraction.");
+    }
+
+    Matrix result(rows_, cols_);
+
+    for (size_t i = 0; i < rows_; ++i) {
+        for (size_t j = 0; j < cols_; ++j) {
+            result(i, j) = (*this)(i, j) - other(i, j);
         }
     }
 
