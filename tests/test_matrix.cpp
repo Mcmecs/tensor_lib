@@ -49,3 +49,22 @@ TEST(MatrixTest, Addition) {
     EXPECT_FLOAT_EQ(C(1, 1), 8.0f);
 
 }
+
+TEST(MatrixTest, Substraction) {
+    Matrix A(2, 2);
+    Matrix B(2, 2);
+
+    A(0,0) = 1.0f; A(0,1) = 2.0f;
+    A(1,0) = 3.0f; A(1,1) = 4.0f;
+
+    B(0,0) = 1.0f; B(0,1) = 1.0f;
+    B(1,0) = 1.0f; B(1,1) = 2.0f;
+
+    Matrix C = A - B; // perform C = A - B
+
+    EXPECT_FLOAT_EQ(C(0,0), 0.0f);
+    EXPECT_FLOAT_EQ(C(0,1), 1.0f);
+    EXPECT_FLOAT_EQ(C(1,0), 2.0f);
+    EXPECT_FLOAT_EQ(C(1,1), 2.0f);
+
+}
