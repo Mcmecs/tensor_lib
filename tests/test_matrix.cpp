@@ -1,10 +1,38 @@
 #include <gtest/gtest.h>
 #include "matrix.h"
 
+// 1. Degine the Test Fixture Class
+class MatrixTest : public ::testing::Test {
+protected:
+    // Variables accessible to all TEST_F blocks.
+    Matrix* A; // Pointer is used because there's no default constructor with zero arguments
+    Matrix* B;
+
+    // SetUp() runs immediately before every single TEST_F block.
+    void SetUp() override {
+        A = new Matrix(2, 2);
+        B = new Matrix(2, 2);
+
+        (*A)(0, 0) = 1.0f; (*A)(0, 1) = 2.0f;
+        (*A)(1, 0) = 3.0f; (*A)(1, 1) = 4.0f;
+
+        (*B)(0, 0) = 2.0f; (*B)(0, 1) = 4.0f;
+        (*B)(1, 0) = 6.0f; (*B)(1, 1) = 8.0f;
+
+    }
+
+    // TearDown() runs immediately after every single TEST_F. 
+    void TearDown() override {
+        // Clean up pointers to prevent memory leaks
+        delete A;
+        delete B;
+    }
+};
+
 // TEST is a GoogleTest macro.
-// "MatrixTest" is the category (test_suite_name). 
+// "MatrixBasicTest" is the category (test_suite_name). 
 // "Initialization"  is the specific test name (test_name).
-TEST(MatrixTest, Initialization) {
+TEST(MatrixBasicTest, Initialization) {
     // 1. Setup: Create a 2x3 matrix
     Matrix mat(2, 3);
 
@@ -22,49 +50,40 @@ TEST(MatrixTest, Initialization) {
     }
 }
 
-TEST(MatrixTest, Addition) {
-    // Declare 2 x 2 matrices A & B
-    Matrix A(2, 2);
-    Matrix B(2, 2);
-
-    // Initialize Matrix A
-    A(0, 0) = 1.0f;
-    A(0, 1) = 2.0f;
-    A(1, 0) = 3.0f;
-    A(1, 1) = 4.0f;
-
-    // Inititalize Matrix B
-    B(0, 0) = 1.0f;
-    B(0, 1) = 2.0f;
-    B(1, 0) = 3.0f;
-    B(1, 1) = 4.0f;
-
-    // Perform addition C = A + B
-    Matrix C = A + B;
+TEST_F(MatrixTest, Addition) {
+    Matrix C = (*A) + (*B);
 
     // Validate results of C
-    EXPECT_FLOAT_EQ(C(0, 0), 2.0f);
-    EXPECT_FLOAT_EQ(C(0, 1), 4.0f);
-    EXPECT_FLOAT_EQ(C(1, 0), 6.0f);
-    EXPECT_FLOAT_EQ(C(1, 1), 8.0f);
+    EXPECT_FLOAT_EQ(C(0, 0), 3.0f);
+    EXPECT_FLOAT_EQ(C(0, 1), 6.0f);
+    EXPECT_FLOAT_EQ(C(1, 0), 9.0f);
+    EXPECT_FLOAT_EQ(C(1, 1), 12.0f);
 
 }
 
-TEST(MatrixTest, Substraction) {
-    Matrix A(2, 2);
-    Matrix B(2, 2);
+TEST_F(MatrixTest, Substraction) {
+    Matrix C = (*B) - (*A); 
 
-    A(0,0) = 1.0f; A(0,1) = 2.0f;
-    A(1,0) = 3.0f; A(1,1) = 4.0f;
+    EXPECT_FLOAT_EQ(C(0,0), 1.0f);
+    EXPECT_FLOAT_EQ(C(0,1), 2.0f);
+    EXPECT_FLOAT_EQ(C(1,0), 3.0f);
+    EXPECT_FLOAT_EQ(C(1,1), 4.0f);
+}
 
-    B(0,0) = 1.0f; B(0,1) = 1.0f;
-    B(1,0) = 1.0f; B(1,1) = 2.0f;
+TEST_F(MatrixTest, ScalarAddition) {
+    Matrix C = (*A) + 1.0f;
 
-    Matrix C = A - B; // perform C = A - B
+    EXPECT_FLOAT_EQ(C(0,0), 2.0f);
+    EXPECT_FLOAT_EQ(C(0,1), 3.0f);
+    EXPECT_FLOAT_EQ(C(1,0), 4.0f);
+    EXPECT_FLOAT_EQ(C(1,1), 5.0f);
+}
 
-    EXPECT_FLOAT_EQ(C(0,0), 0.0f);
-    EXPECT_FLOAT_EQ(C(0,1), 1.0f);
-    EXPECT_FLOAT_EQ(C(1,0), 2.0f);
-    EXPECT_FLOAT_EQ(C(1,1), 2.0f);
+TEST_F(MatrixTest, ScalarMultiple) {
+    Matrix C = (*B) * 2.0f;
 
+    EXPECT_FLOAT_EQ(C(0,0), 4.0f);
+    EXPECT_FLOAT_EQ(C(0,1), 8.0f);
+    EXPECT_FLOAT_EQ(C(1,0), 12.0f);
+    EXPECT_FLOAT_EQ(C(1,1), 16.0f);
 }
