@@ -100,6 +100,28 @@ Matrix Matrix::operator-(const Matrix& other) const {
     return result;
 }
 
+// Scalar Addition and Multiplication
+Matrix Matrix::operator+(float scalar) const {
+    size_t total_elements = rows_ * cols_; 
+    Matrix result(rows_, cols_);
+    
+    // Single loop since adding the same number to each element
+    for (size_t i = 0; i < total_elements; ++i) {
+        result.data_[i] = this->data_[i] + scalar;
+    }
+    return result;
+}
+
+Matrix Matrix::operator*(float scalar) const {
+    size_t total_elements = rows_ * cols_;
+    Matrix result(rows_, cols_);
+
+    for (size_t i = 0; i < total_elements; ++i) {
+        result.data_[i] = this->data_[i] * scalar;
+    }
+    return result;
+}
+
 // 6. Helper Print Function
 void Matrix::print() const {
     for (size_t i = 0; i < rows_; ++i) {
