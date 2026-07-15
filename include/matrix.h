@@ -31,14 +31,14 @@ public:
     float operator()(size_t row, size_t col) const; // Get () operator: float weight = math(1, 0);
     Matrix operator+(const Matrix& other) const; // Operator Overloading the '+' symbol for Matrix addition
     Matrix operator-(const Matrix& other) const; // Opeartor overloading the '-' symbol for Matrix substraction
-
     Matrix operator+(float scalar) const; // Scalar addition
     Matrix operator*(float scalar) const; // Scalar multiplication
-
     Matrix operator*(const Matrix& other) const; // Overloading '*' for Matrix to Matrix multiplication
 
+    // Helper functions
     Matrix transpose() const; //Matrix transposition
-    
+    Matrix hadamard(const Matrix& other) const; // Element-wise multiplication (multiple A(1,1) by B(1,1)): its called Hadamard product
+
     void print() const;
 };
 

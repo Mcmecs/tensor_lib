@@ -128,3 +128,13 @@ TEST_F(MatrixTest, MatrixTranspose) {
     EXPECT_FLOAT_EQ(B(2,0), 3.0f);
     EXPECT_FLOAT_EQ(B(2,1), 6.0f);
 }
+
+TEST_F(MatrixTest, MatrixHadamard) {
+    Matrix C = (*A).hadamard(*B);
+
+    EXPECT_FLOAT_EQ(C(0, 0), 2.0f);
+    EXPECT_FLOAT_EQ(C(0, 1), 8.0f);
+    EXPECT_FLOAT_EQ(C(1, 0), 18.0f);
+    EXPECT_FLOAT_EQ(C(1, 1), 32.0f);
+
+}

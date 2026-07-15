@@ -141,6 +141,7 @@ Matrix Matrix::operator*(const Matrix& other) const {
     return result;
 }
 
+// Helper Functions
 Matrix Matrix::transpose() const {
     Matrix result(cols_, rows_);
 
@@ -153,7 +154,21 @@ Matrix Matrix::transpose() const {
     return result;
 }
 
-// Helper Function
+Matrix Matrix::hadamard(const Matrix& other) const {
+    if (this->cols_ != other.cols_ || this->rows_ != other.rows_) {
+        throw std::invalid_argument("Matrix dimensions are incompatible for Hadamard product.");
+    }
+
+    Matrix result(rows_, cols_);
+    size_t total_elements = cols_ * rows_;
+
+    for (size_t i = 0; i < total_elements; ++i) {
+        result.data_[i] = this->data_[i] * other.data_[i];
+    }
+
+    return result;
+}
+
 void Matrix::print() const {
     for (size_t i = 0; i < rows_; ++i) {
         for (size_t j = 0; j < cols_; ++j) {
