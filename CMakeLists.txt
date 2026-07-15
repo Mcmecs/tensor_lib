@@ -13,11 +13,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")  # Capital 'O' and number 3 (-O3)
 include_directories(include)
 
 # 2. Build the main program
-# This links main.cpp and matrix.cpp together into an executable called "tensor_app"
-add_executable(tensor_app src/main.cpp src/matrix.cpp)
+# This links main.cpp together into an executable called "tensor_app"
+add_executable(tensor_app src/main.cpp)
 
 # Benchmarking executable
-add_executable(tensor_benchmark src/benchmark.cpp src/matrix.cpp)
+add_executable(tensor_benchmark src/benchmark.cpp)
 
 # 3. Fetch and Configure GoogleTest
 include(FetchContent)
@@ -34,7 +34,7 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 # Create a separate executable specifically for running tests
-add_executable(tensor_tests tests/test_matrix.cpp src/matrix.cpp)
+add_executable(tensor_tests tests/test_matrix.cpp)
 
 # Link the GoogleTest framework to our test executable
 target_link_libraries(tensor_tests GTest::gtest_main)

@@ -6,7 +6,7 @@ int main() {
 
     // 1. Create a 3x3 matrix
     // This automatically calls the Constructor and uses new[] to grab memory
-    Matrix mat(3, 3);
+    Matrix<float> mat(3, 3);
 
     // 2. Modify values using the overloaded () operator
     mat(0, 0) = 1.5f;

@@ -5,13 +5,13 @@
 class MatrixTest : public ::testing::Test {
 protected:
     // Variables accessible to all TEST_F blocks.
-    Matrix* A; // Pointer is used because there's no default constructor with zero arguments
-    Matrix* B;
+    Matrix<float>* A; // Pointer is used because there's no default constructor with zero arguments
+    Matrix<float>* B;
 
     // SetUp() runs immediately before every single TEST_F block.
     void SetUp() override {
-        A = new Matrix(2, 2);
-        B = new Matrix(2, 2);
+        A = new Matrix<float>(2, 2);
+        B = new Matrix<float>(2, 2);
 
         (*A)(0, 0) = 1.0f; (*A)(0, 1) = 2.0f;
         (*A)(1, 0) = 3.0f; (*A)(1, 1) = 4.0f;
@@ -34,7 +34,7 @@ protected:
 // "Initialization"  is the specific test name (test_name).
 TEST(MatrixBasicTest, Initialization) {
     // 1. Setup: Create a 2x3 matrix
-    Matrix mat(2, 3);
+    Matrix<float> mat(2, 3);
 
     // 2. Validate Dimensions using EXPECT_EQ (Expect Equal) - use getting functions
     EXPECT_EQ(mat.getRows(), 2);
@@ -89,16 +89,16 @@ TEST_F(MatrixTest, ScalarMultiple) {
 }
 
 TEST_F(MatrixTest, MatrixMultiplication) {
-    Matrix A(2, 3);
+    Matrix<float> A(2, 3);
     A(0, 0) = 1.0f; A(0, 1) = 2.0f; A(0, 2) = 3.0f;
     A(1, 0) = 4.0f; A(1, 1) = 5.0f; A(1, 2) = 6.0f;
 
-    Matrix B(3, 2);
+    Matrix<float> B(3, 2);
     B(0, 0) = 7.0f;  B(0, 1) = 8.0f;
     B(1, 0) = 9.0f;  B(1, 1) = 10.0f;
     B(2, 0) = 11.0f; B(2, 1) = 12.0f;
 
-    Matrix C = A * B;
+    Matrix<float> C = A * B;
 
     // Check dimensions of the new matrix
     EXPECT_EQ(C.getRows(), 2);
@@ -111,11 +111,11 @@ TEST_F(MatrixTest, MatrixMultiplication) {
 }
 
 TEST_F(MatrixTest, MatrixTranspose) {
-    Matrix A(2, 3);
+    Matrix<float> A(2, 3);
     A(0, 0) = 1.0f; A(0, 1) = 2.0f; A(0, 2) = 3.0f;
     A(1, 0) = 4.0f; A(1, 1) = 5.0f; A(1, 2) = 6.0f;
 
-    Matrix B = A.transpose();
+    Matrix<float> B = A.transpose();
 
     EXPECT_EQ(B.getRows(), 3);
     EXPECT_EQ(B.getCols(), 2);
@@ -137,4 +137,18 @@ TEST_F(MatrixTest, MatrixHadamard) {
     EXPECT_FLOAT_EQ(C(1, 0), 18.0f);
     EXPECT_FLOAT_EQ(C(1, 1), 32.0f);
 
+}
+
+TEST(MatrixTemplateTest, IntegerMatrix) {
+    Matrix<int> intMat(2, 2);
+
+    intMat(0, 0) = 1; intMat(0, 1) = 2;
+    intMat(1, 0) = 3; intMat(1, 1) = 4;
+
+    Matrix<int> result = intMat * 2;
+
+    EXPECT_EQ(result(0, 0), 2);
+    EXPECT_EQ(result(0, 1), 4);
+    EXPECT_EQ(result(1, 0), 6);
+    EXPECT_EQ(result(1, 1), 8);
 }

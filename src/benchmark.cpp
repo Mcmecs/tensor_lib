@@ -6,8 +6,8 @@ int main() {
     const size_t SIZE = 500;
 
     std::cout << "Allocating " << SIZE << "x" << SIZE << " matrices..." << std::endl;
-    Matrix A(SIZE, SIZE);
-    Matrix B(SIZE, SIZE);
+    Matrix<float> A(SIZE, SIZE);
+    Matrix<float> B(SIZE, SIZE);
 
     for (size_t i = 0; i < SIZE; ++i) {
         for (size_t j = 0; j < SIZE; ++j) {
