@@ -35,6 +35,8 @@ public:
     Matrix operator+(float scalar) const; // Scalar addition
     Matrix operator*(float scalar) const; // Scalar multiplication
 
+    Matrix operator*(const Matrix& other) const; // Overloading '*' for Matrix to Matrix multiplication
+
     void print() const;
 };
 

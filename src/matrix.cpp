@@ -122,6 +122,25 @@ Matrix Matrix::operator*(float scalar) const {
     return result;
 }
 
+Matrix Matrix::operator*(const Matrix& other) const {
+    // Check the columns match rows of other (inner dimensions)
+    if (cols_ != other.rows_) {
+        throw std::invalid_argument("Matrix dimensions are incompatible for multiplication.");
+    }
+
+    Matrix result(rows_, other.cols_); // Create matrix based on outer dimensions
+
+    for (size_t i = 0; i < rows_; ++i) {
+        for (size_t j = 0; j < other.cols_; ++j) {
+            for (size_t k = 0; k < cols_; ++k) {
+                result(i, j) += (*this)(i, k) * other(k, j);
+            }
+        }
+    }
+
+    return result;
+}
+
 // 6. Helper Print Function
 void Matrix::print() const {
     for (size_t i = 0; i < rows_; ++i) {

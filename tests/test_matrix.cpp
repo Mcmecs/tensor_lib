@@ -87,3 +87,26 @@ TEST_F(MatrixTest, ScalarMultiple) {
     EXPECT_FLOAT_EQ(C(1,0), 12.0f);
     EXPECT_FLOAT_EQ(C(1,1), 16.0f);
 }
+
+TEST_F(MatrixTest, MatrixMultiplication) {
+    Matrix A(2, 3);
+    A(0, 0) = 1.0f; A(0, 1) = 2.0f; A(0, 2) = 3.0f;
+    A(1, 0) = 4.0f; A(1, 1) = 5.0f; A(1, 2) = 6.0f;
+
+    Matrix B(3, 2);
+    B(0, 0) = 7.0f;  B(0, 1) = 8.0f;
+    B(1, 0) = 9.0f;  B(1, 1) = 10.0f;
+    B(2, 0) = 11.0f; B(2, 1) = 12.0f;
+
+    Matrix C = A * B;
+
+    // Check dimensions of the new matrix
+    EXPECT_EQ(C.getRows(), 2);
+    EXPECT_EQ(C.getCols(), 2);
+
+    EXPECT_FLOAT_EQ(C(0, 0), 58.0f);
+    EXPECT_FLOAT_EQ(C(0, 1), 64.0f);
+    EXPECT_FLOAT_EQ(C(1, 0), 139.0f);
+    EXPECT_FLOAT_EQ(C(1, 1), 154.0f);
+
+}
