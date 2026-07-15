@@ -6,12 +6,18 @@ project(TensorLibrary CXX) # CXX is convention for C++
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# -03 tells the compiler to aggressively optimize loops, inline functions, and vectorize math.
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")  # Capital 'O' and number 3 (-O3)
+
 # Tell CMake where to look for your header (.h) file
 include_directories(include)
 
 # 2. Build the main program
 # This links main.cpp and matrix.cpp together into an executable called "tensor_app"
 add_executable(tensor_app src/main.cpp src/matrix.cpp)
+
+# Benchmarking executable
+add_executable(tensor_benchmark src/benchmark.cpp src/matrix.cpp)
 
 # 3. Fetch and Configure GoogleTest
 include(FetchContent)

@@ -130,9 +130,10 @@ Matrix Matrix::operator*(const Matrix& other) const {
 
     Matrix result(rows_, other.cols_); // Create matrix based on outer dimensions
 
+    // Optimized: Swapped the j and k loops for Cache Locality.
     for (size_t i = 0; i < rows_; ++i) {
-        for (size_t j = 0; j < other.cols_; ++j) {
-            for (size_t k = 0; k < cols_; ++k) {
+        for (size_t k = 0; k < cols_; ++k) {
+            for (size_t j = 0; j < other.cols_; ++j) {
                 result(i, j) += (*this)(i, k) * other(k, j);
             }
         }
