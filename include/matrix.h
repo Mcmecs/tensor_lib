@@ -37,6 +37,8 @@ public:
 
     Matrix operator*(const Matrix& other) const; // Overloading '*' for Matrix to Matrix multiplication
 
+    Matrix transpose() const; //Matrix transposition
+    
     void print() const;
 };
 

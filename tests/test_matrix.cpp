@@ -108,5 +108,23 @@ TEST_F(MatrixTest, MatrixMultiplication) {
     EXPECT_FLOAT_EQ(C(0, 1), 64.0f);
     EXPECT_FLOAT_EQ(C(1, 0), 139.0f);
     EXPECT_FLOAT_EQ(C(1, 1), 154.0f);
+}
 
+TEST_F(MatrixTest, MatrixTranspose) {
+    Matrix A(2, 3);
+    A(0, 0) = 1.0f; A(0, 1) = 2.0f; A(0, 2) = 3.0f;
+    A(1, 0) = 4.0f; A(1, 1) = 5.0f; A(1, 2) = 6.0f;
+
+    Matrix B = A.transpose();
+
+    EXPECT_EQ(B.getRows(), 3);
+    EXPECT_EQ(B.getCols(), 2);
+
+
+    EXPECT_FLOAT_EQ(B(0,0), 1.0f);
+    EXPECT_FLOAT_EQ(B(0,1), 4.0f);
+    EXPECT_FLOAT_EQ(B(1,0), 2.0f);
+    EXPECT_FLOAT_EQ(B(1,1), 5.0f);
+    EXPECT_FLOAT_EQ(B(2,0), 3.0f);
+    EXPECT_FLOAT_EQ(B(2,1), 6.0f);
 }

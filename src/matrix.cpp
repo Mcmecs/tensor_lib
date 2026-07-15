@@ -141,7 +141,19 @@ Matrix Matrix::operator*(const Matrix& other) const {
     return result;
 }
 
-// 6. Helper Print Function
+Matrix Matrix::transpose() const {
+    Matrix result(cols_, rows_);
+
+    for (size_t i = 0; i < rows_; ++i) {
+        for (size_t j = 0; j < cols_; ++j) {
+            result(j, i) = (*this)(i, j);
+        }
+    }
+
+    return result;
+}
+
+// Helper Function
 void Matrix::print() const {
     for (size_t i = 0; i < rows_; ++i) {
         for (size_t j = 0; j < cols_; ++j) {
