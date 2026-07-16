@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "matrix.h"
+#include <utility>
 
 // 1. Degine the Test Fixture Class
 class MatrixTest : public ::testing::Test {
@@ -151,4 +152,22 @@ TEST(MatrixTemplateTest, IntegerMatrix) {
     EXPECT_EQ(result(0, 1), 4);
     EXPECT_EQ(result(1, 0), 6);
     EXPECT_EQ(result(1, 1), 8);
+}
+
+TEST(MatrixTemplateTest, MoveSemantics) {
+    // 1. Create a standard matrix
+    Matrix<float> Original(2, 2);
+    Original(0, 0) = 5.0f;
+
+    // 2. Force a move operation instead of a copy
+    Matrix<float> Stolen = std::move(Original);
+
+    // 3. Verify 'stolen' now owns the data
+    EXPECT_EQ(Stolen.getRows(), 2);
+    EXPECT_FLOAT_EQ(Stolen(0, 0), 5.0f);
+
+    // 4. Verify 'original' has been completely stripped of its data
+    // Becayse we set other.data_ = nullptr and rows & cols = 0 in the move constructor
+    EXPECT_EQ(Original.getRows(), 0);
+    EXPECT_EQ(Original.getCols(), 0);
 }

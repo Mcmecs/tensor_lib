@@ -22,8 +22,37 @@ public:
     Matrix(size_t rows, size_t cols); // Constructor: Allocates memory for a rows x cols matrix initialized to 0.0f
     ~Matrix(); // Destructor: Frees the dynamically allocated memory to avoid leaks
 
+    // Copy Constructor and Copy Assignment Operator (Rule of Three)
     Matrix(const Matrix& other); // Copy constructor: Used when creating a new matrix from an existing one (e.g., Matrix B = A;)
     Matrix& operator=(const Matrix& other); // Copy Assignment Operator: Used when assigning to an already existing matrix (e.g., B = A;)
+
+    // Move Constructor and Move Assignment Operator (Rule of Five)
+    // The 'noexcept' keword tells the compiler this function will never throw an error, which allows the C++ Standard Library to optimize it even further.
+    Matrix(Matrix&& other) noexcept : rows_(other.rows_), cols_(other.cols_), data_(other.data_) {
+        // Critical step: We stole the pointer (data_ = other.data_), if we don't nullify the original object, its Destructor will run and delete[]
+        // the memory we just stole, causing our program to crash
+        other.rows_ = 0;
+        other.cols_ = 0;
+        other.data_ = nullptr;
+    }
+    Matrix& operator=(Matrix&& other) noexcept {
+        if (this != &other) { // Protect against A = std::move(A)
+            // 1. Free out existing memory
+            delete[] data_;
+
+            // 2. Steal the data from 'other'
+            rows_ = other.rows_;
+            cols_ = other.cols_;
+            data_ = other.data_;
+
+            // 3. Nullify the source object so it doesn't delete our stolen memory
+            other.rows_ = 0;
+            other.cols_ = 0;
+            other.data_ = nullptr;
+        }
+
+        return *this;
+    }
 
     // Getter methods for dimensions
     size_t getRows() const;
