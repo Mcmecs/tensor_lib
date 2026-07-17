@@ -42,3 +42,15 @@ target_link_libraries(tensor_tests GTest::gtest_main)
 #Tell CMake to discover and register our tests
 include(GoogleTest)
 gtest_discover_tests(tensor_tests)
+
+# Fetch and Configure Pybind11
+FetchContent_Declare(
+    pybind11
+    GIT_REPOSITORY http://github.com/pybind/pybind11.git
+    GIT_TAG        v2.11.1
+)
+FetchContent_MakeAvailable(pybind11)
+
+# Create the Python Extension Module
+# This tells CMake to create a library (.so file) that Python can import, rather than an executable.
+pybind11_add_module(tensor_ext src/bindings.cpp)
