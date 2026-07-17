@@ -1,15 +1,21 @@
 # Changelog
 
-Summary of all relevant changes to the C++ Tensor Library project will be documented in this file. This document tracks weekly milestones.
+All notable changes to this project will be summarized in this file.
 
-## [Week 1: Foundation] - 2026-07-07
+## [1.0.0] - 2026-07-17
 ### Added
-* Set up project architecture and directory strcuture.
-* The `Matrix` class header file with manual heap allocation (`new[]`)
+* Python bindings via Pybind11 to expose Matrix class and math operations. 
+* Comprehensive `README.md` with build instructions.
+* Core matrix arithmetic operations (Hadamard product, transpose, scalar addition/multiplication, and operator overloads).
+* GitHub Actions CI pipeline (`ci.yml`) for automated testing.
 * Standardized CMake build system (`CMakeLists.txt`)
+* The `Matrix` class header file with manual heap allocation (`new[]`)
 
 ### Changes
-* N/A
+* Refactored `Matrix` class into a generic template.
+* Implemented Move Semantics (Rule of Five) for sero-copy memory transfers.
+* Optimized matrix multiplication loops for cache locality (`i, k, j`).
+Enabled `-O3` compiler flags for SIMD vectorization.
 
 ### Fixed
-* N/A
+* Resolved memory leaks during matrix destruction.
